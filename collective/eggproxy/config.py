@@ -19,6 +19,7 @@ import sys
 from ConfigParser import ConfigParser
 from ConfigParser import NoSectionError
 
+import logging
 
 # First try: User-specific config file
 CONFIG_FILE = os.path.join(os.path.expanduser('~'), 'eggproxy.conf')
@@ -40,9 +41,17 @@ config.set("eggproxy", "update_interval", '24')
 config.set("eggproxy", "port", '8888')
 config.set("eggproxy", "always_refresh", '0')
 config.set("eggproxy", "timeout", '3')
+config.set("eggproxy", "logging", "0")
 
 if os.path.exists(CONFIG_FILE):
     config.readfp(open(CONFIG_FILE))
+
+    if config.getboolean('eggproxy', 'logging'):
+        logging.basicConfig(
+                            level=logging.DEBUG,
+                            format='%(asctime)-6s: %(name)30s - %(levelname)s - %(message)s',
+                            )
+    
     # Check for old [default] section that fails with python2.6 had thus has
     # been changed to [eggproxy] in 0.4
     try:
