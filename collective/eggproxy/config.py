@@ -31,7 +31,7 @@ if not os.path.exists(CONFIG_FILE):
 if not os.path.exists(CONFIG_FILE):
     CONFIG_FILE = '/etc/eggproxy.conf'
 
-#print "Using config file", CONFIG_FILE
+print "Using config file", CONFIG_FILE
 config = ConfigParser()
 config.add_section("eggproxy")
 config.set("eggproxy", "eggs_directory", "/var/www")

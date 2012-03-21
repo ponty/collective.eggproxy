@@ -33,6 +33,9 @@ from setuptools.package_index import (
 
 from pkg_resources import Requirement
 from collective.eggproxy.config import config
+import logging
+
+log=logging.getLogger('collective.eggproxy.utils')
 
 ALWAYS_REFRESH = config.getboolean('eggproxy', 'always_refresh')
 EGGS_DIR = config.get("eggproxy", "eggs_directory")
@@ -234,8 +237,12 @@ class IndexProxy(object):
             filename, md5 = egg_info_for_url(dist.location)
             if filename == eggname:
                 tmp = tempfile.gettempdir()
-                tmp_location = self.index.download(dist.location, tmp)
-                shutil.move(tmp_location, file_path)
-                return
+                try:
+                    tmp_location = self.index.download(dist.location, tmp)
+                    log.debug('Downloaded %s\n' % dist.location)
+                    shutil.move(tmp_location, file_path)
+                    return
+                except Exception, err:
+                    log.debug('Error downloading %s: \n\t%s\n' % (dist.location, err))
 
         raise ValueError, "Egg '%s' not found in index" % eggname
