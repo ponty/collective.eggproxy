@@ -34,6 +34,7 @@ if not os.path.exists(CONFIG_FILE):
 config = ConfigParser()
 config.add_section("eggproxy")
 config.set("eggproxy", "eggs_directory", "/var/www")
+config.set("eggproxy", "create_eggs_directory", "0")
 config.set("eggproxy", "index", 'http://pypi.python.org/simple')
 config.set("eggproxy", "update_interval", '24')
 config.set("eggproxy", "port", '8888')

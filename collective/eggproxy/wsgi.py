@@ -46,8 +46,13 @@ class EggProxyApp(object):
         if not eggs_dir:
             eggs_dir = config.get('eggproxy', 'eggs_directory')
         if not os.path.isdir(eggs_dir):
-            print 'You must create the %r directory' % eggs_dir
-            sys.exit()
+            create_eggs_directory = config.getboolean('eggproxy', 'create_eggs_directory')
+            if create_eggs_directory:
+                print 'Creating the %r directory' % eggs_dir
+                os.makedirs(eggs_dir)
+            else:
+                print 'You must create the %r directory' % eggs_dir
+                sys.exit()
         self.eggs_index_proxy = IndexProxy(PackageIndex(index_url=index_url))
         self.eggs_dir = eggs_dir
 
