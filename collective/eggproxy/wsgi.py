@@ -115,8 +115,13 @@ class EggProxyApp(object):
             try:
                 self.eggs_index_proxy.updateEggFor(package_name, eggname,
                                                    eggs_dir=self.eggs_dir)
-            except ValueError:
+            except Exception as e:
+                open(filename,'w').write('')
                 return None
+        
+        if os.path.getsize(filename)==0:
+            return None
+
         return filename
 
 
