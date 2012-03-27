@@ -48,10 +48,10 @@ if os.path.exists(CONFIG_FILE):
 
     if config.getboolean('eggproxy', 'logging'):
         logging.basicConfig(
-                            level=logging.DEBUG,
-                            format='%(asctime)-6s: %(name)30s - %(levelname)s - %(message)s',
-                            )
-    
+            level=logging.DEBUG,
+            format='%(asctime)-6s: %(name)30s - %(levelname)s - %(message)s',
+            )
+
     # Check for old [default] section that fails with python2.6 had thus has
     # been changed to [eggproxy] in 0.4
     try:

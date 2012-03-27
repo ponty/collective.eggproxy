@@ -29,7 +29,7 @@ from collective.eggproxy import PackageNotFound
 from collective.eggproxy.config import config
 import logging
 
-log=logging.getLogger('collective.eggproxy.wsgi')
+log = logging.getLogger('collective.eggproxy.wsgi')
 
 ALWAYS_REFRESH = config.getboolean('eggproxy', 'always_refresh')
 if ALWAYS_REFRESH:
@@ -114,20 +114,20 @@ class EggProxyApp(object):
 
     def checkEggFor(self, package_name, eggname):
         filename = os.path.join(self.eggs_dir, package_name, eggname)
-        log.debug('Asking for package:%s egg:%s'% (package_name, eggname))
+        log.debug('Asking for package:%s egg:%s' % (package_name, eggname))
         if not os.path.exists(filename):
             log.debug('Not in cache, start downloading..')
             try:
                 self.eggs_index_proxy.updateEggFor(package_name, eggname,
                                                    eggs_dir=self.eggs_dir)
             except Exception as e:
-                open(filename,'w').write('')
-                log.debug('Download error:%s'% (e))
+                open(filename, 'w').write('')
+                log.debug('Download error:%s' % (e))
                 return None
         else:
-            log.debug('Found in cache:%s'% (filename))
-        
-        if os.path.getsize(filename)==0:
+            log.debug('Found in cache:%s' % (filename))
+
+        if os.path.getsize(filename) == 0:
             return None
 
         return filename
@@ -169,5 +169,5 @@ def standalone():
     #paste.script.command.run()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     standalone()
