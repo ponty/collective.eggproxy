@@ -120,7 +120,7 @@ class EggProxyApp(object):
             try:
                 self.eggs_index_proxy.updateEggFor(package_name, eggname,
                                                    eggs_dir=self.eggs_dir)
-            except Exception as e:
+            except ValueError as e:
                 open(filename, 'w').write('')
                 log.debug('Download error:%s' % (e))
                 return None
