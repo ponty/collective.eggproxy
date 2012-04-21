@@ -6,3 +6,6 @@ develop-eggs
 parts
 dist
 build
+
+.*
+!.gitignore
