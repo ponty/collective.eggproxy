@@ -240,6 +240,13 @@ class IndexProxy(object):
                 try:
                     tmp_location = self.index.download(dist.location, tmp)
                     log.debug('Downloaded %s\n' % dist.location)
+
+                    # BUG:
+                    # 2 instances are downloading "traits" package.
+                    # First instance removes the file
+                    #   from /tmp with "shutil.move",
+                    # second instance can not find it ->
+                    # "shutil.move" raises exception
                     shutil.move(tmp_location, file_path)
                     return
                 except Exception, err:

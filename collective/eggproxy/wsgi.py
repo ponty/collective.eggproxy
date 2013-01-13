@@ -121,8 +121,10 @@ class EggProxyApp(object):
                 self.eggs_index_proxy.updateEggFor(package_name, eggname,
                                                    eggs_dir=self.eggs_dir)
             except ValueError as e:
-                open(filename, 'w').write('')
                 logger.debug('Download error:%s' % (e))
+                if not os.path.exists(filename):
+                    open(filename, 'w').write('')
+                    logger.debug('Writing empty file at:%s' % (filename))
                 return None
         else:
             logger.debug('Found in cache:%s' % (filename))
