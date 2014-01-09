@@ -161,7 +161,15 @@ def standalone():
     port = config.get('eggproxy', 'port')
     # 0.2.0 way of starting the httpserver, but using the config'ed port
     # number instead of a hardcoded 8888.
-    httpserver.serve(EggProxyApp(), host='127.0.0.1', port=port)
+    httpserver.serve(EggProxyApp(), 
+                     host='127.0.0.1', 
+                     port=port,
+                    socket_timeout=5*60,
+                    use_threadpool=False, 
+                    threadpool_workers=10,
+                    threadpool_options=None, 
+                    request_queue_size=5
+                    )
     # Post-0.2.0 way of starting the server using hardcoded config by means of
     # the package-internal .ini file. This does not allow starting it on a
     # different port, so I [reinout] commented it out for now.
